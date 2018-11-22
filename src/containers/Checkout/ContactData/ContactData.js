@@ -76,7 +76,7 @@ class ContactData extends Component {
         event.preventDefault();
         this.setState( { loading: true } );
         // Extract the data we want to submit, get the orderForm element
-        const formData= {};
+        const formData = {};
         // formElementIdentifier = name, country, email...
         for(let formElementIdentifier in this.state.orderForm) {
             // Create key/value pairs, where we add a new property to formData (country, name...) and

@@ -8,10 +8,18 @@ const input = (props) => {
     switch(props.elementType) {
         case('input'):
             // Any default attributes set on the HTML input element are pased down from outside with "{...props}"
-            inputElement = <input className={classes.InputElement} {...props.elementConfig} value={props.value} onChange={props.changed} />;
+            inputElement = <input 
+                className={classes.InputElement} 
+                {...props.elementConfig} 
+                value={props.value} 
+                onChange={props.changed} />;
             break;
         case('textarea'):
-            inputElement = <textarea className={classes.InputElement} {...props.elementConfig} value={props.value} onChange={props.changed} />
+            inputElement = <textarea 
+                className={classes.InputElement} 
+                {...props.elementConfig} 
+                value={props.value} 
+                onChange={props.changed} />
             break;
         case('select'):
             // Wrapped in parentheses to allow multi-line content
