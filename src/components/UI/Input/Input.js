@@ -4,19 +4,24 @@ import classes from './Input.css';
 // Functional component
 const input = (props) => {
     let inputElement = null;
+    const inputClasses = [classes.InputElement]
+
+    if(props.invalid && props.shouldValidate) {
+        inputClasses.push(classes.Invalid);
+    }
 
     switch(props.elementType) {
         case('input'):
             // Any default attributes set on the HTML input element are pased down from outside with "{...props}"
             inputElement = <input 
-                className={classes.InputElement} 
+                className={inputClasses.join(' ')} 
                 {...props.elementConfig} 
                 value={props.value} 
                 onChange={props.changed} />;
             break;
         case('textarea'):
             inputElement = <textarea 
-                className={classes.InputElement} 
+                className={inputClasses.join(' ')} 
                 {...props.elementConfig} 
                 value={props.value} 
                 onChange={props.changed} />
@@ -25,7 +30,7 @@ const input = (props) => {
             // Wrapped in parentheses to allow multi-line content
             inputElement = (
             <select 
-                className={classes.InputElement} 
+                className={inputClasses.join(' ')} 
                 // {...props.elementConfig} 
                 value={props.value}>
                 {/* Dynamically create the options available on the Select dropdown */}
