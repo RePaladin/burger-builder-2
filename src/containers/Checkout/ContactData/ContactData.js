@@ -91,10 +91,12 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value: ''
+                value: '',
+                valid: true
             }
         },
         // End of input elements
+        formIsValid: false,
         loading: false
     }
 
@@ -144,6 +146,10 @@ class ContactData extends Component {
         return isValid;
     }
 
+    clickedInput = (event) => {
+        console.log(event.target.value);
+    }
+
     // Here we expect to get an event object
     inputChangedHandler = (event, inputIdentifier) => {
         // console.log(event.target.value);
@@ -160,10 +166,17 @@ class ContactData extends Component {
         };
         // Now we can safely change the value, because it is a clone
         updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+        let formIsValid = true;
+        
+        for(let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid
+        }
         // Now we can change State
-        this.setState({orderForm: updatedOrderForm});
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
         // Two-way binding is now working
     }
 
@@ -199,9 +212,11 @@ class ContactData extends Component {
                         // We get the event object and also the identifier
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
+                        touched={formElement.config.touched}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                         />
                 ))}
-                <Button btnType="Success">ORDER</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
         if ( this.state.loading ) {
